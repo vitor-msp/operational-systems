@@ -32,7 +32,7 @@ void test(int philosopher)
     if (state[philosopher] == HUNGRY && state[LEFT] != EATING && state[RIGHT] != EATING)
     {
         state[philosopher] = EATING;
-        sem_wait(&semaphores[philosopher]);
+        sem_post(&semaphores[philosopher]);
     }
 }
 
@@ -42,7 +42,7 @@ void take_forks(int philosopher)
     state[philosopher] = HUNGRY;        /* registra que o filosofo esta faminto */
     test(philosopher);                  /* tenta pegar dois garfos */
     pthread_mutex_unlock(&mutex);       /* sai da regiao critica */
-    sem_post(&semaphores[philosopher]); /* bloqueia se os garfos nao foram pegos */
+    sem_wait(&semaphores[philosopher]); /* bloqueia se os garfos nao foram pegos */
 }
 
 void put_forks(int philosopher)
@@ -78,7 +78,7 @@ void main(void)
     pthread_mutex_init(&mutex, 0);
     for (int i = 0; i < N; i++)
     {
-        status = sem_init(&semaphores[i], 0, 1);
+        status = sem_init(&semaphores[i], 0, 0);
         if (ERROR)
             return;
     }
