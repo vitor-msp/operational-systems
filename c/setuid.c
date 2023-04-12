@@ -38,11 +38,16 @@ int main(void)
         exit(1);
     }
     file = fopen(filepath, "a");
+    if (file == NULL)
+    {
+        printf("user not have permission to access file\n");
+        exit(2);
+    }
     if (first_time)
         chmod(filepath, mode);
     s = fprintf(file, "%s\n", buffer);
     fclose(file);
     if (s < 0)
-        exit(2);
+        exit(3);
     exit(0);
 }
