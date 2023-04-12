@@ -5,8 +5,6 @@
 #include <fcntl.h>
 #include <dirent.h>
 #include <stdio.h>
-// #include <time.h>
-// #include <string.h>
 
 void main(int argc, char *argv[])
 {
